@@ -89,7 +89,9 @@ public class PolicyService {
         return ApiResponse.of(ResponseCode.SUCCESS, responseDTOs);
     }
 
-    public ApiResponse<PolicyResponseDTO> updatePolicyScraped(Long policyId) {
+    public ApiResponse<PolicyResponseDTO> updatePolicyScraped(String uuid, Long policyId) {
+        Member member= memberRepository.findByUuid(uuid)
+                .orElseThrow(()-> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
         Policy policy = policyRepository.findById(policyId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 정책을 찾을 수 없습니다."));
 
@@ -115,7 +117,9 @@ public class PolicyService {
                 policy.getUrl(),
                 policy.getApplyUrl()));
     }
-    public ApiResponse<PolicyResponseDTO> updatePolicyUnscraped(Long policyId){
+    public ApiResponse<PolicyResponseDTO> updatePolicyUnscraped(String uuid, Long policyId){
+        Member member= memberRepository.findByUuid(uuid)
+                .orElseThrow(()-> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
         Policy policy =policyRepository.findById(policyId)
                 .orElseThrow(()->new IllegalStateException("해당 정책을 찾을 수 없습니다."));
 
@@ -143,7 +147,9 @@ public class PolicyService {
 
     }
 
-    public ApiResponse<List<PolicyResponseDTO>> getScrapedPolicies(){
+    public ApiResponse<List<PolicyResponseDTO>> getScrapedPolicies(String uuid){
+        Member member= memberRepository.findByUuid(uuid)
+                .orElseThrow(()-> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
         List<Policy> policies=policyRepository.findByIsScraped(true);
 
         List<PolicyResponseDTO> responseDTOs = policies.stream()
