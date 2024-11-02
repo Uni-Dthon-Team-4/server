@@ -6,6 +6,7 @@ import unid.team4.server.global.response.ResponseCode;
 import unid.team4.server.member.domain.Member;
 import unid.team4.server.member.domain.repository.MemberRepository;
 import unid.team4.server.policy.controller.dto.PolicyResponseDTO;
+import unid.team4.server.policy.controller.dto.PolicySearchDTO;
 import unid.team4.server.policy.domain.Policy;
 import unid.team4.server.policy.domain.repository.PolicyRepository;
 
@@ -62,6 +63,24 @@ public class PolicyService {
                         policy.getAge().name(),
                         policy.getUrl(),
                         policy.getApplyUrl()))
+                .collect(Collectors.toList());
+
+        // 응답 생성
+        return ApiResponse.of(ResponseCode.SUCCESS, responseDTOs);
+    }
+
+    public ApiResponse<List<PolicySearchDTO>> getPoliciesByKeyword(String keyword) {
+        List<Policy> policies = policyRepository.findByKeyword(keyword);
+
+        // 정책 리스트를 PolicySearchDTO로 변환
+        List<PolicySearchDTO> responseDTOs = policies.stream()
+                .map(policy -> new PolicySearchDTO(
+                        policy.getPolicyId(),
+                        policy.getName(),
+                        policy.getDescription(),
+                        policy.getCategory().name(),
+                        policy.getAge().name(),
+                        policy.getUrl()))
                 .collect(Collectors.toList());
 
         // 응답 생성

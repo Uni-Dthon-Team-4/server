@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import unid.team4.server.global.response.ApiResponse;
 import unid.team4.server.policy.controller.dto.PolicyResponseDTO;
+import unid.team4.server.policy.controller.dto.PolicySearchDTO;
 import unid.team4.server.policy.service.PolicyService;
 
 import java.util.List;
@@ -26,6 +27,15 @@ public class PolicyApi {
             @RequestHeader("uuid") String uuid,
             @RequestParam(value = "category", required = false) String category) {
         ApiResponse<List<PolicyResponseDTO>> response = policyService.getPoliciesByAgeGroupAndCategory(uuid, category);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/search")
+    @Operation(summary = "키워드 기반 정책 검색 API", description = "키워드를 입력받아 해당 키워드를 포함하는 정책을 검색합니다.\n\n" +
+            "Best Case: 청년 키워드")
+    public ResponseEntity<ApiResponse<List<PolicySearchDTO>>> getPoliciesByKeyword(
+            @RequestParam("keyword") String keyword) {
+        ApiResponse<List<PolicySearchDTO>> response = policyService.getPoliciesByKeyword(keyword);
         return ResponseEntity.ok(response);
     }
 }
