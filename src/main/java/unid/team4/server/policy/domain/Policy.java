@@ -34,6 +34,8 @@ public class Policy extends BaseDateTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String applyUrl;
 
+    private Boolean isScraped;
+
     public enum Category {
         JOB, EDUCATION, LIVING, WELFARE // 일자리, 교육, 주거, 복지
     }
