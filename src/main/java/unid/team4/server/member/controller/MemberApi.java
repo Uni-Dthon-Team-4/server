@@ -32,7 +32,7 @@ public class MemberApi {
     public ResponseEntity<Boolean> isIdExist(@RequestParam String userId) {
         boolean isDuplicate = memberService.isIdExist(userId);
         if (isDuplicate) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(false);
+            return ResponseEntity.ok(false);
         } else {
             return ResponseEntity.ok(true);
         }
