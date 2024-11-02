@@ -63,7 +63,7 @@ public class MemberService {
 
     }
 
-    public MemberResponseDTO.LoginResponse getUser(MemberRequestDTO.LoginRequest request) {
+    public MemberResponseDTO.JoinResponse getUser(MemberRequestDTO.LoginRequest request) {
         Member member = memberRepository.findByUserId(request.getUserId()).orElseThrow(() -> new IllegalArgumentException("User not found"));
         String hashedPassword = PasswordUtil.hashPassword(request.getPassword(), member.getSalt());
 
@@ -72,10 +72,16 @@ public class MemberService {
             throw new IllegalArgumentException("Invalid password");
         }
 
-        return MemberResponseDTO.LoginResponse.builder()
+        return MemberResponseDTO.JoinResponse.builder()
+                .id(member.getId())
                .userId(member.getUserId())
                .email(member.getEmail())
                 .uuid(member.getUuid())
+                .age(member.getAge())
+                .keyword1(member.getKeyword1())
+                .keyword2(member.getKeyword2())
+                .keyword3(member.getKeyword3())
+                .address(member.getAddress())
                .build();
     }
 
