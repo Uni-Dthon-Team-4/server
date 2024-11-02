@@ -75,6 +75,7 @@ public class MemberService {
         return MemberResponseDTO.LoginResponse.builder()
                .userId(member.getUserId())
                .email(member.getEmail())
+                .uuid(member.getUuid())
                .build();
     }
 

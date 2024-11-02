@@ -28,6 +28,7 @@ public class MemberResponseDTO {
     public static class LoginResponse{
         private String userId;
         private String email;
+        private String uuid;
     }
 
 
