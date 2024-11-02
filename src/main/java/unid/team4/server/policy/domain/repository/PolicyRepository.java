@@ -12,4 +12,5 @@ public interface PolicyRepository extends JpaRepository<Policy, Long> {
     List<Policy> findByAgeAndCategory(Policy.AgeGroup age, Policy.Category category);
     @Query("SELECT p FROM Policy p WHERE p.name LIKE %:keyword% OR p.description LIKE %:keyword%")
     List<Policy> findByKeyword(@Param("keyword") String keyword);
+    List<Policy> findByIsScraped(boolean isScraped);
 }

@@ -13,6 +13,8 @@ import unid.team4.server.policy.domain.repository.PolicyRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.lang3.tuple.Pair.of;
+
 @Service
 public class PolicyService {
     private final PolicyRepository policyRepository;
@@ -86,4 +88,79 @@ public class PolicyService {
         // 응답 생성
         return ApiResponse.of(ResponseCode.SUCCESS, responseDTOs);
     }
+
+    public ApiResponse<PolicyResponseDTO> updatePolicyScraped(Long policyId) {
+        Policy policy = policyRepository.findById(policyId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 정책을 찾을 수 없습니다."));
+
+        if (Boolean.TRUE.equals(policy.getIsScraped())) {
+            throw new IllegalArgumentException("해당 정책은 이미 스크랩 되었습니다.");
+        } else {
+            policy.setIsScraped(true);
+        }
+        if (policy.getIsScraped() == null) {
+            policy.setIsScraped(true);
+        }
+
+        policyRepository.save(policy);
+
+        //      생성
+        return ApiResponse.of(ResponseCode.SUCCESS, new PolicyResponseDTO(
+                policy.getPolicyId(),
+                policy.getIsScraped(),
+                policy.getName(),
+                policy.getDescription(),
+                policy.getCategory().name(),
+                policy.getAge().name(),
+                policy.getUrl(),
+                policy.getApplyUrl()));
+    }
+    public ApiResponse<PolicyResponseDTO> updatePolicyUnscraped(Long policyId){
+        Policy policy =policyRepository.findById(policyId)
+                .orElseThrow(()->new IllegalStateException("해당 정책을 찾을 수 없습니다."));
+
+        if(Boolean.FALSE.equals(policy.getIsScraped())){
+            throw new IllegalArgumentException("해당 정책은 이미 스크랩 해지되었습니다.");
+        }
+        else{
+            policy.setIsScraped(false);
+        }
+        if(policy.getIsScraped()==null)
+        {
+            policy.setIsScraped(false);
+        }
+        policyRepository.save(policy);
+
+        return ApiResponse.of(ResponseCode.SUCCESS, new PolicyResponseDTO(
+                policy.getPolicyId(),
+                policy.getIsScraped(),
+                policy.getName(),
+                policy.getDescription(),
+                policy.getCategory().name(),
+                policy.getAge().name(),
+                policy.getUrl(),
+                policy.getApplyUrl()));
+
+    }
+
+    public ApiResponse<List<PolicyResponseDTO>> getScrapedPolicies(){
+        List<Policy> policies=policyRepository.findByIsScraped(true);
+
+        List<PolicyResponseDTO> responseDTOs = policies.stream()
+                .map(policy -> new PolicyResponseDTO(
+                        policy.getPolicyId(),
+                        policy.getIsScraped(),
+                        policy.getName(),
+                        policy.getDescription(),
+                        policy.getCategory().name(),
+                        policy.getAge().name(),
+                        policy.getUrl(),
+                        policy.getApplyUrl()))
+                .collect(Collectors.toList());
+
+        return ApiResponse.of(ResponseCode.SUCCESS, responseDTOs);
+    }
+
+
+
 }

@@ -38,4 +38,26 @@ public class PolicyApi {
         ApiResponse<List<PolicySearchDTO>> response = policyService.getPoliciesByKeyword(keyword);
         return ResponseEntity.ok(response);
     }
+
+    @PatchMapping("/scraped/{policyId}")
+    @Operation(summary="정책 스크랩 등록 API", description = "정책 Id를 입력받아 정책의 is_scraped의 컬럼값을 true로 변경합니다.\n\n")
+    public ResponseEntity<ApiResponse<PolicyResponseDTO>> updatePolicyScraped(@PathVariable Long policyId){
+        ApiResponse<PolicyResponseDTO> response=policyService.updatePolicyScraped(policyId);
+        return ResponseEntity.ok(response);
+
+    }
+
+    @PatchMapping("/unscraped/{policyId}")
+    @Operation(summary="정책 스크랩 해제 API", description="정책 Id를 입력받아 정책의 is_scraped의 컬럼값을 true로 변경합니다.\n\n")
+    public ResponseEntity<ApiResponse<PolicyResponseDTO>> updatePolicyUnscraped(@PathVariable Long policyId){
+        ApiResponse<PolicyResponseDTO> response=policyService.updatePolicyUnscraped(policyId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/scrap/List")
+    @Operation(summary="스크랩된 정책 목록 API", description = "스크랩된 정책 목록을 조회합니다.\n\n")
+    public ResponseEntity<ApiResponse<List<PolicyResponseDTO>>> getScrapedPolicies(){
+        ApiResponse<List<PolicyResponseDTO>> response=policyService.getScrapedPolicies();
+        return ResponseEntity.ok(response);
+    }
 }
