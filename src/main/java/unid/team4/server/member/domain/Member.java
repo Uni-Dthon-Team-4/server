@@ -9,6 +9,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "member")
@@ -28,4 +29,5 @@ public class Member extends BaseDateTimeEntity {
     private String keyword2;
     private String keyword3;
     private String address;
+    private byte[] salt;
 }
