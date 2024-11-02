@@ -40,8 +40,8 @@ public class MemberApi {
 
     @PostMapping("/login")
     @Operation(summary = "로그인 API", description = "로그인 API")
-    public ResponseEntity<MemberResponseDTO.LoginResponse> getUser(@RequestBody MemberRequestDTO.LoginRequest request){
-        MemberResponseDTO.LoginResponse responseDTO = memberService.getUser(request);
+    public ResponseEntity<MemberResponseDTO.JoinResponse> getUser(@RequestBody MemberRequestDTO.LoginRequest request){
+        MemberResponseDTO.JoinResponse responseDTO = memberService.getUser(request);
 
         return ResponseEntity.ok(responseDTO);
     }

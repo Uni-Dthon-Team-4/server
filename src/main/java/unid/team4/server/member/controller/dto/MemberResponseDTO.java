@@ -22,15 +22,4 @@ public class MemberResponseDTO {
         private String address;
     }
 
-    @Getter
-    @Setter
-    @Builder
-    public static class LoginResponse{
-        private String userId;
-        private String email;
-        private String uuid;
-    }
-
-
-
 }
