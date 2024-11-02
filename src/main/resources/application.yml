@@ -35,3 +35,9 @@ logging:
       hibernate:
         SQL: DEBUG
         type: trace
+
+openai:
+  model: gpt-4o-mini
+  api:
+    key: ${OPENAI_API_KEY}
+    url: "https://api.openai.com/v1/chat/completions"
