@@ -7,4 +7,4 @@
 ## 🖥️ 데모 영상
 
 
-![PICKNPOLY-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/0f042191-564c-4d62-a2f5-a047352839bb)
+https://github.com/user-attachments/assets/d3d9e76a-5c54-4fcb-a54a-c2cd5960f093
